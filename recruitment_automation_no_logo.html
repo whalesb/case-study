@@ -1,0 +1,1244 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruitment Automation - Use Case</title>
+
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Arial', sans-serif;
+            background: #FAFAF8;
+            color: #1A1A1A;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            background: #FAFAF8;
+            position: relative;
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        /* Brutalist Header with Diagonal Cut */
+        .header {
+            background: #0A0A0A;
+            color: #FAFAF8;
+            padding: 35px 40px 60px 40px;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 180px;
+            height: 180px;
+            background: #E85D04;
+            opacity: 0.15;
+            border-radius: 50%;
+            transform: translate(40%, 40%);
+        }
+        
+        .company-tag {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #E85D04;
+            margin-bottom: 12px;
+        }
+        
+        .header h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 14px;
+            letter-spacing: -1px;
+            position: relative;
+            z-index: 1;
+            max-width: 65%;
+        }
+        
+        .header .subtitle {
+            font-size: 15px;
+            line-height: 1.4;
+            opacity: 0.85;
+            font-weight: 400;
+            max-width: 65%;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .client-badge {
+            position: absolute;
+            top: 110px;
+            right: 30px;
+            background: #FAFAF8;
+            color: #0A0A0A;
+            padding: 12px 20px;
+            border: 3px solid #E85D04;
+            z-index: 50;
+            min-width: 200px;
+            text-align: center;
+        }
+        
+        .client-badge .label {
+            font-family: 'Courier New', monospace;
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #E85D04;
+            font-weight: 600;
+        }
+        
+        .client-badge .name {
+            font-size: 13px;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+        
+        /* Main Content Area */
+        .content {
+            padding: 35px 40px 30px 40px;
+        }
+        
+        /* Section Headers */
+        .section-label {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #E85D04;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 6px;
+        }
+        
+        .section-label::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #E85D04;
+            transform: skewX(-15deg);
+        }
+        
+        /* Problem Statement - Full Width */
+        .problem-section {
+            margin-bottom: 20px;
+        }
+        
+        .problem-container {
+            background: #FFFFFF;
+            border: 3px solid #0A0A0A;
+            padding: 20px 22px;
+            position: relative;
+            box-shadow: 8px 8px 0 #E85D04;
+            margin-bottom: 5px;
+        }
+        
+        .problem-container::before {
+            content: '!';
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: #E85D04;
+            color: #FAFAF8;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            border: 3px solid #0A0A0A;
+        }
+        
+        .problem-text {
+            font-size: 11.5px;
+            line-height: 1.6;
+            color: #2C2C2C;
+            margin-bottom: 12px;
+        }
+        
+        /* Challenges Grid */
+        .challenges-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 12px;
+        }
+        
+        .challenge-card {
+            background: #F7F7F5;
+            border: 2px solid #0A0A0A;
+            border-left: 4px solid #E85D04;
+            padding: 14px 16px;
+        }
+        
+        .challenge-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #0A0A0A;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .challenge-text {
+            font-size: 10px;
+            line-height: 1.5;
+            color: #3C3C3C;
+        }
+        
+        /* Solution Architecture */
+        .architecture-section {
+            margin-bottom: 20px;
+        }
+        
+        .architecture-container {
+            background: #FFFFFF;
+            border: 2px solid #0A0A0A;
+            padding: 20px;
+            margin-top: 12px;
+        }
+        
+        .architecture-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .arch-component {
+            flex: 1;
+            background: #F7F7F5;
+            border: 2px solid #0A0A0A;
+            padding: 15px 12px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .arch-component::after {
+            content: '→';
+            position: absolute;
+            right: -18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            font-weight: 700;
+            color: #E85D04;
+        }
+        
+        .arch-component:last-child::after {
+            display: none;
+        }
+        
+        .arch-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        .arch-label {
+            font-size: 9.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #0A0A0A;
+            line-height: 1.2;
+            margin-bottom: 4px;
+        }
+        
+        .arch-description {
+            font-size: 8.5px;
+            line-height: 1.3;
+            color: #666;
+        }
+        
+        /* Tech Stack */
+        .tech-stack {
+            padding: 12px 15px;
+            background: #0A0A0A;
+            color: #FAFAF8;
+        }
+        
+        .tech-stack-title {
+            font-family: 'Courier New', monospace;
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #E85D04;
+            margin-bottom: 8px;
+        }
+        
+        .tech-tag {
+            display: inline-block;
+            background: #FAFAF8;
+            border: 1.5px solid #FAFAF8;
+            color: #0A0A0A;
+            padding: 4px 10px;
+            margin: 3px 4px 3px 0;
+            font-size: 9px;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Approach Summary */
+        .approach-section {
+            margin-bottom: 20px;
+        }
+        
+        .approach-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin-top: 12px;
+        }
+        
+        .phase-card {
+            background: #40916C;
+            color: #FAFAF8;
+            padding: 12px 10px;
+            text-align: center;
+            border: 2px solid #0A0A0A;
+            position: relative;
+        }
+        
+        .phase-number {
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        
+        .phase-label {
+            font-size: 9px;
+            font-weight: 600;
+            line-height: 1.2;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        /* ROI Section */
+        .roi-section {
+            margin-bottom: 25px;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-top: 15px;
+        }
+        
+        .metric-card {
+            background: #0A0A0A;
+            color: #FAFAF8;
+            padding: 20px 16px;
+            border: 3px solid #0A0A0A;
+            position: relative;
+            text-align: center;
+        }
+        
+        .metric-card::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            right: -6px;
+            width: 100%;
+            height: 100%;
+            background: #E85D04;
+            z-index: -1;
+        }
+        
+        .metric-category {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #E85D04;
+        }
+        
+        .metric-value {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+        
+        .metric-label {
+            font-size: 9px;
+            line-height: 1.3;
+            opacity: 0.9;
+        }
+        
+        /* Compliance */
+        .compliance-section {
+            margin-bottom: 25px;
+        }
+        
+        .compliance-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 12px;
+        }
+        
+        .compliance-card {
+            background: #FFFFFF;
+            border: 2px solid #0A0A0A;
+            padding: 14px 16px;
+            position: relative;
+        }
+        
+        .compliance-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: #40916C;
+        }
+        
+        .compliance-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #0A0A0A;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .compliance-text {
+            font-size: 10px;
+            line-height: 1.5;
+            color: #3C3C3C;
+        }
+        
+        /* Footer */
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            left: 40px;
+            right: 40px;
+            padding-top: 15px;
+            border-top: 2px solid #0A0A0A;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-left {
+            font-size: 11px;
+            font-weight: 600;
+            color: #0A0A0A;
+        }
+        
+        .footer-right {
+            font-family: 'Courier New', monospace;
+            font-size: 9px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Page 2 Styles */
+        .page-2 {
+            padding-top: 25mm;
+        }
+        
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding: 0 40px;
+        }
+        
+        .page-number {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: #E85D04;
+            line-height: 1;
+        }
+        
+        .page-title h2 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #0A0A0A;
+            line-height: 1.2;
+            margin-top: 5px;
+        }
+        
+        /* Flowchart Container */
+        .flowchart-container {
+            background: #FFFFFF;
+            border: 3px solid #0A0A0A;
+            padding: 25px;
+            margin-top: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .flowchart-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Implementation Timeline */
+        .timeline-section {
+            margin-bottom: 25px;
+        }
+        
+        .timeline-container {
+            background: #0A0A0A;
+            color: #FAFAF8;
+            padding: 20px 25px;
+            border: 3px solid #0A0A0A;
+            box-shadow: 6px 6px 0 #E85D04;
+        }
+        
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 12px;
+            align-items: start;
+        }
+        
+        .timeline-phase {
+            position: relative;
+            padding-left: 28px;
+            min-height: 60px;
+        }
+        
+        .timeline-phase::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            background: #E85D04;
+            border: 2px solid #FAFAF8;
+            border-radius: 50%;
+        }
+        
+        .timeline-week {
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            font-weight: 600;
+            color: #E85D04;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .timeline-task {
+            font-size: 11px;
+            line-height: 1.5;
+            font-weight: 600;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+        
+        /* Detailed Process Steps */
+        .process-details {
+            margin-bottom: 25px;
+        }
+        
+        .process-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 12px;
+        }
+        
+        .process-card {
+            background: #FFFFFF;
+            border: 2px solid #0A0A0A;
+            padding: 16px 18px;
+        }
+        
+        .process-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #F0F0EE;
+        }
+        
+        .process-number {
+            background: #E85D04;
+            color: #FAFAF8;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        
+        .process-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #0A0A0A;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .process-steps {
+            list-style: none;
+        }
+        
+        .process-steps li {
+            font-size: 10px;
+            line-height: 1.6;
+            color: #2C2C2C;
+            margin-bottom: 6px;
+            padding-left: 18px;
+            position: relative;
+        }
+        
+        .process-steps li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #40916C;
+            font-weight: 700;
+        }
+        
+        @media print {
+            body {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+            
+            .page {
+                page-break-after: always;
+            }
+        }
+    
+    .header-logo {
+        position: absolute;
+        top: 15px;
+        right: 30px;
+        height: 70px;
+        width: auto;
+        z-index: 100;
+        background: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+    }
+    
+    .page-logo {
+        position: absolute;
+        top: 20px;
+        right: 40px;
+        height: 40px;
+        width: auto;
+        z-index: 10;
+        background: white;
+        padding: 6px 12px;
+        border-radius: 4px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    </style>
+</head>
+<body>
+    <!-- PAGE 1 -->
+    <div class="page">
+        <!-- Header -->
+        <div class="header">
+        
+            <div class="client-badge">
+                <div class="label">Client</div>
+                <div class="name">Tech Bake Ltd · UK</div>
+            </div>
+            <div class="company-tag">AI Automation Solutions</div>
+            <h1>Intelligent Recruitment<br>Automation System</h1>
+            <div class="subtitle">AI-powered candidate screening with automated outreach, Bullhorn CRM integration &amp; multi-channel engagement</div>
+        </div>
+        
+        <div class="content">
+            <!-- Problem Statement -->
+            <div class="problem-section">
+                <div class="section-label">Problem Statement</div>
+                <div class="problem-container">
+                    <div class="problem-text">
+                        <strong>Tech Bake Ltd's recruitment team managed candidate outreach and job applications entirely through manual processes in Bullhorn CRM.</strong> Consultants spent hours each day calling candidates, updating records, and coordinating placements. The existing recruitment workflow was highly manual — staff spent excessive time on repetitive tasks, limiting the number of job openings they could actively manage.
+                    </div>
+                    
+                    <div class="challenges-grid">
+                        <div class="challenge-card">
+                            <div class="challenge-title">Manual Outreach</div>
+                            <div class="challenge-text">Staff manually called 20+ candidates per posting, consuming significant time and limiting capacity</div>
+                        </div>
+                        <div class="challenge-card">
+                            <div class="challenge-title">Slow Response Times</div>
+                            <div class="challenge-text">Delayed responses to job seekers damaged candidate experience and brand reputation</div>
+                        </div>
+                        <div class="challenge-card">
+                            <div class="challenge-title">Limited Capacity</div>
+                            <div class="challenge-text">Team could only handle few active postings simultaneously due to manual workload</div>
+                        </div>
+                        <div class="challenge-card">
+                            <div class="challenge-title">Inconsistent Follow-ups</div>
+                            <div class="challenge-text">Unanswered calls rarely re-engaged, causing missed placement opportunities</div>
+                        </div>
+                        <div class="challenge-card">
+                            <div class="challenge-title">Manual CRM Updates</div>
+                            <div class="challenge-text">Hours spent logging call outcomes and status updates in Bullhorn system</div>
+                        </div>
+                        <div class="challenge-card">
+                            <div class="challenge-title">Poor Visibility</div>
+                            <div class="challenge-text">No real-time engagement insights, hindering follow-up prioritization</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Solution Architecture -->
+            <div class="architecture-section">
+                <div class="section-label">Solution Architecture</div>
+                <div class="architecture-container">
+                    <div class="architecture-flow">
+                        <div class="arch-component">
+                            <div class="arch-icon">👤</div>
+                            <div class="arch-label">Candidate</div>
+                            <div class="arch-description">Applies via voice or chat</div>
+                        </div>
+                        <div class="arch-component">
+                            <div class="arch-icon">💼</div>
+                            <div class="arch-label"><span style="display: inline-flex; align-items: center; gap: 6px;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="16" height="16" rx="2" fill="#FF6B00"></rect>
+<path d="M11 3L5 6V10L11 13V3ZM12 5V11C12 11.55 11.55 12 11 12H10V4H11C11.55 4 12 4.45 12 5Z" fill="white"></path>
+</svg><span>Bullhorn CRM</span></span></div>
+                            <div class="arch-description">Central recruitment database</div>
+                        </div>
+                        <div class="arch-component">
+                            <div class="arch-icon">🔄</div>
+                            <div class="arch-label"><span style="display: inline-flex; align-items: center; gap: 6px;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="16" height="16" rx="3" fill="#EA4B71"></rect>
+<path d="M4 6H7V10H4V6ZM9 6H12V10H9V6ZM7 4H9V12H7V4Z" fill="white"></path>
+</svg><span>n8n Automation</span></span></div>
+                            <div class="arch-description">Workflow orchestration</div>
+                        </div>
+                        <div class="arch-component">
+                            <div class="arch-icon">🤖</div>
+                            <div class="arch-label"><span style="display: inline-flex; align-items: center; gap: 6px;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="16" height="16" rx="3" fill="#6366F1"></rect>
+<path d="M8 4C6.34 4 5 5.34 5 7C5 8.66 6.34 10 8 10C9.66 10 11 8.66 11 7C11 5.34 9.66 4 8 4ZM8 12C5.33 12 3 11.08 3 9.75V13H13V9.75C13 11.08 10.67 12 8 12Z" fill="white"></path>
+</svg><span>Retell AI</span></span></div>
+                            <div class="arch-description">Voice &amp; chat agents</div>
+                        </div>
+                        <div class="arch-component">
+                            <div class="arch-icon">👥</div>
+                            <div class="arch-label">Recruitment Team</div>
+                            <div class="arch-description">Real-time notifications</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-stack">
+                        <div class="tech-stack-title">Technology Stack</div>
+                        <span class="tech-tag"><span style="display: inline-flex; align-items: center; gap: 6px;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="16" height="16" rx="2" fill="#FF6B00"></rect>
+<path d="M11 3L5 6V10L11 13V3ZM12 5V11C12 11.55 11.55 12 11 12H10V4H11C11.55 4 12 4.45 12 5Z" fill="white"></path>
+</svg><span>Bullhorn CRM</span></span></span>
+                        <span class="tech-tag"><span style="display: inline-flex; align-items: center; gap: 6px;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="16" height="16" rx="3" fill="#6366F1"></rect>
+<path d="M8 4C6.34 4 5 5.34 5 7C5 8.66 6.34 10 8 10C9.66 10 11 8.66 11 7C11 5.34 9.66 4 8 4ZM8 12C5.33 12 3 11.08 3 9.75V13H13V9.75C13 11.08 10.67 12 8 12Z" fill="white"></path>
+</svg><span>Retell AI Voice</span></span></span>
+                        <span class="tech-tag"><span style="display: inline-flex; align-items: center; gap: 6px;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="16" height="16" rx="3" fill="#6366F1"></rect>
+<path d="M8 4C6.34 4 5 5.34 5 7C5 8.66 6.34 10 8 10C9.66 10 11 8.66 11 7C11 5.34 9.66 4 8 4ZM8 12C5.33 12 3 11.08 3 9.75V13H13V9.75C13 11.08 10.67 12 8 12Z" fill="white"></path>
+</svg><span>Retell AI Chatbot</span></span></span>
+                        <span class="tech-tag"><span style="display: inline-flex; align-items: center; gap: 6px;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="16" height="16" rx="3" fill="#EA4B71"></rect>
+<path d="M4 6H7V10H4V6ZM9 6H12V10H9V6ZM7 4H9V12H7V4Z" fill="white"></path>
+</svg><span>n8n Workflows</span></span></span>
+                        <span class="tech-tag">Twilio SMS</span>
+                        <span class="tech-tag"><span style="display: inline-flex; align-items: center; gap: 6px;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M6 3C6 2.45 5.55 2 5 2C4.45 2 4 2.45 4 3V5H6V3ZM6 6H3C2.45 6 2 6.45 2 7C2 7.55 2.45 8 3 8H6C6.55 8 7 7.55 7 7C7 6.45 6.55 6 6 6Z" fill="#E01E5A"></path>
+<path d="M10 13C10 13.55 10.45 14 11 14C11.55 14 12 13.55 12 13V11H10V13ZM10 10H13C13.55 10 14 9.55 14 9C14 8.45 13.55 8 13 8H10C9.45 8 9 8.45 9 9C9 9.55 9.45 10 10 10Z" fill="#ECB22E"></path>
+<path d="M3 10C2.45 10 2 10.45 2 11C2 11.55 2.45 12 3 12H5V10H3ZM13 6C13.55 6 14 5.55 14 5C14 4.45 13.55 4 13 4H11V6H13Z" fill="#2EB67D"></path>
+<path d="M7 3C7 2.45 7.45 2 8 2C8.55 2 9 2.45 9 3V6C9 6.55 8.55 7 8 7C7.45 7 7 6.55 7 6V3ZM10 10C10 10.55 9.55 11 9 11C8.45 11 8 10.55 8 10V7C8 6.45 8.45 6 9 6C9.55 6 10 6.45 10 7V10Z" fill="#36C5F0"></path>
+</svg> <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="16" height="16" rx="2" fill="#5059C9"></rect>
+<path d="M10 5C10 6.1 9.1 7 8 7C6.9 7 6 6.1 6 5C6 3.9 6.9 3 8 3C9.1 3 10 3.9 10 5ZM5 13V9C5 8.45 5.45 8 6 8H10C10.55 8 11 8.45 11 9V13H5Z" fill="white"></path>
+</svg><span>Slack/Teams</span></span></span>
+                        <span class="tech-tag">REST APIs</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Approach Phases -->
+            <div class="approach-section">
+                <div class="section-label">Implementation Approach</div>
+                <div class="approach-grid">
+                    <div class="phase-card">
+                        <div class="phase-number">01</div>
+                        <div class="phase-label">AI Agent Setup</div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-number">02</div>
+                        <div class="phase-label">CRM Integration</div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-number">03</div>
+                        <div class="phase-label">Conversation Design</div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-number">04</div>
+                        <div class="phase-label">Workflow Build</div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-number">05</div>
+                        <div class="phase-label">Reporting Setup</div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-number">06</div>
+                        <div class="phase-label">Testing &amp; Launch</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ROI Metrics -->
+            <div class="roi-section">
+                <div class="section-label">Quantified Business Impact</div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-category">Scalability</div>
+                        <div class="metric-value">10×</div>
+                        <div class="metric-label">Growth: 5 to 50+ job postings</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-category">Speed</div>
+                        <div class="metric-value">90%</div>
+                        <div class="metric-label">Faster: 3 days → 4 hours</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-category">Coverage</div>
+                        <div class="metric-value">100%</div>
+                        <div class="metric-label">Complete engagement via AI</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-category">Cost Savings</div>
+                        <div class="metric-value">$6-8K</div>
+                        <div class="metric-label">Monthly savings achieved</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Compliance -->
+            <div class="compliance-section">
+                <div class="section-label">Compliance &amp; Data Protection</div>
+                <div class="compliance-grid">
+                    <div class="compliance-card">
+                        <div class="compliance-title">GDPR Compliance</div>
+                        <div class="compliance-text">Full compliance with UK GDPR requirements for candidate data processing, consent management, and right to erasure</div>
+                    </div>
+                    <div class="compliance-card">
+                        <div class="compliance-title">Data Security</div>
+                        <div class="compliance-text">End-to-end encryption for all candidate communications, secure API integrations, role-based access control</div>
+                    </div>
+                    <div class="compliance-card">
+                        <div class="compliance-title">Audit Trail</div>
+                        <div class="compliance-text">Complete tracking of all candidate interactions, AI decisions, and recruitment team actions with timestamps</div>
+                    </div>
+                    <div class="compliance-card">
+                        <div class="compliance-title">Quality Assurance</div>
+                        <div class="compliance-text">Continuous monitoring of AI agent performance, human oversight for edge cases, regular accuracy reviews</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Timeline -->
+            <div class="section-label">Deployment Roadmap</div>
+            <div class="timeline-container">
+                <div class="timeline-grid">
+                    <div class="timeline-phase">
+                        <div class="timeline-week">Week 1-2</div>
+                        <div class="timeline-task">AI agent training &amp; CRM integration setup</div>
+                    </div>
+                    <div class="timeline-phase">
+                        <div class="timeline-week">Week 3-4</div>
+                        <div class="timeline-task">Conversation flows, workflow automation &amp; testing</div>
+                    </div>
+                    <div class="timeline-phase">
+                        <div class="timeline-week">Week 5-6</div>
+                        <div class="timeline-task">Pilot launch with 5 roles, optimization &amp; full rollout</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-left"></div>
+            <div class="footer-right">Page 1 of 2 | Confidential © 2025</div>
+        </div>
+    </div>
+    
+    <!-- PAGE 2: DETAILED FLOWCHART -->
+    <div class="page page-2">
+        <div class="page-header">
+        
+            <div class="page-number">02</div>
+            <div class="page-title">
+                <div class="company-tag">Process Flow Diagram</div>
+                <h2>Detailed Workflow Architecture</h2>
+            </div>
+        </div>
+        
+        <div class="content">
+            <!-- Flowchart -->
+            <div class="section-label">Complete Automation Flow</div>
+            <div class="flowchart-container">
+                <svg viewBox="0 0 1000 1400" class="flowchart-image" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Define styles -->
+                    <defs>
+                        <style>
+                            .flow-box { fill: #FAFAF8; stroke: #0A0A0A; stroke-width: 2; }
+                            .flow-phase { fill: #FFE5CC; stroke: #E85D04; stroke-width: 2; }
+                            .flow-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Arial', sans-serif; font-size: 13px; font-weight: 600; fill: #0A0A0A; }
+                            .flow-text-small { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Arial', sans-serif; font-size: 10px; fill: #2C2C2C; }
+                            .flow-phase-text { font-family: 'Courier New', monospace; font-size: 11px; font-weight: 700; fill: #E85D04; text-transform: uppercase; }
+                            .flow-arrow { stroke: #E85D04; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+                            .flow-decision { fill: #FFFFFF; stroke: #0A0A0A; stroke-width: 2; }
+                        
+    .header-logo {
+        position: absolute;
+        top: 15px;
+        right: 30px;
+        height: 70px;
+        width: auto;
+        z-index: 100;
+        background: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+    }
+    
+    .page-logo {
+        position: absolute;
+        top: 20px;
+        right: 40px;
+        height: 40px;
+        width: auto;
+        z-index: 10;
+        background: white;
+        padding: 6px 12px;
+        border-radius: 4px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    </style>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <polygon points="0 0, 10 3, 0 6" fill="#E85D04"></polygon>
+                        </marker>
+                    </defs>
+                    
+                    <!-- Start -->
+                    <ellipse cx="500" cy="40" rx="80" ry="30" class="flow-box"></ellipse>
+                    <text x="500" y="48" text-anchor="middle" class="flow-text">START</text>
+                    
+                    <!-- Phase 1 Header -->
+                    <rect x="50" y="90" width="900" height="35" class="flow-phase"></rect>
+                    <text x="500" y="112" text-anchor="middle" class="flow-phase-text">Phase 1: AI Agent Engagement</text>
+                    
+                    <!-- Candidate Application -->
+                    <rect x="400" y="150" width="200" height="60" rx="5" class="flow-box"></rect>
+                    <text x="500" y="175" text-anchor="middle" class="flow-text">Candidate Applies</text>
+                    <text x="500" y="195" text-anchor="middle" class="flow-text-small">Voice or Chat Interface</text>
+                    
+                    <path d="M 500 210 L 500 240" class="flow-arrow"></path>
+                    
+                    <!-- Split to Outbound/Inbound -->
+                    <rect x="200" y="240" width="180" height="60" rx="5" class="flow-box"></rect>
+                    <text x="290" y="265" text-anchor="middle" class="flow-text">Outbound Calls</text>
+                    <text x="290" y="285" text-anchor="middle" class="flow-text-small">Proactive screening</text>
+                    
+                    <rect x="620" y="240" width="180" height="60" rx="5" class="flow-box"></rect>
+                    <text x="710" y="265" text-anchor="middle" class="flow-text">Inbound Inquiries</text>
+                    <text x="710" y="285" text-anchor="middle" class="flow-text-small">Candidate initiated</text>
+                    
+                    <path d="M 500 240 L 290 240" class="flow-arrow"></path>
+                    <path d="M 500 240 L 710 240" class="flow-arrow"></path>
+                    
+                    <!-- Converge to Chat Follow-ups -->
+                    <path d="M 290 300 L 290 340 L 500 340" class="flow-arrow"></path>
+                    <path d="M 710 300 L 710 340 L 500 340" class="flow-arrow"></path>
+                    
+                    <rect x="400" y="340" width="200" height="60" rx="5" class="flow-box"></rect>
+                    <text x="500" y="365" text-anchor="middle" class="flow-text">Chat Follow-ups</text>
+                    <text x="500" y="385" text-anchor="middle" class="flow-text-small">Multi-channel engagement</text>
+                    
+                    <!-- Phase 2 Header -->
+                    <path d="M 500 400 L 500 430" class="flow-arrow"></path>
+                    
+                    <rect x="50" y="430" width="900" height="35" class="flow-phase"></rect>
+                    <text x="500" y="452" text-anchor="middle" class="flow-phase-text">Phase 2: CRM Integration &amp; Data Sync</text>
+                    
+                    <!-- Bullhorn Sync -->
+                    <rect x="400" y="490" width="200" height="60" rx="5" class="flow-box"></rect>
+                    <text x="500" y="515" text-anchor="middle" class="flow-text">Bullhorn CRM Sync</text>
+                    <text x="500" y="535" text-anchor="middle" class="flow-text-small">Bi-directional data flow</text>
+                    
+                    <!-- Phase 3 Header -->
+                    <path d="M 500 550 L 500 580" class="flow-arrow"></path>
+                    
+                    <rect x="50" y="580" width="900" height="35" class="flow-phase"></rect>
+                    <text x="500" y="602" text-anchor="middle" class="flow-phase-text">Phase 3: Intelligent Processing</text>
+                    
+                    <!-- Three parallel processes -->
+                    <rect x="100" y="640" width="200" height="60" rx="5" class="flow-box"></rect>
+                    <text x="200" y="665" text-anchor="middle" class="flow-text">Candidate Screening</text>
+                    <text x="200" y="685" text-anchor="middle" class="flow-text-small">AI qualification</text>
+                    
+                    <rect x="400" y="640" width="200" height="60" rx="5" class="flow-box"></rect>
+                    <text x="500" y="665" text-anchor="middle" class="flow-text">Qualification</text>
+                    <text x="500" y="685" text-anchor="middle" class="flow-text-small">Skills &amp; experience match</text>
+                    
+                    <rect x="700" y="640" width="200" height="60" rx="5" class="flow-box"></rect>
+                    <text x="800" y="665" text-anchor="middle" class="flow-text">Engagement Scripts</text>
+                    <text x="800" y="685" text-anchor="middle" class="flow-text-small">Voice &amp; text responses</text>
+                    
+                    <path d="M 500 615 L 200 640" class="flow-arrow"></path>
+                    <path d="M 500 615 L 500 640" class="flow-arrow"></path>
+                    <path d="M 500 615 L 800 640" class="flow-arrow"></path>
+                    
+                    <!-- Converge -->
+                    <path d="M 200 700 L 200 730 L 500 730" class="flow-arrow"></path>
+                    <path d="M 500 700 L 500 730" class="flow-arrow"></path>
+                    <path d="M 800 700 L 800 730 L 500 730" class="flow-arrow"></path>
+                    
+                    <!-- Phase 4 Header -->
+                    <rect x="50" y="730" width="900" height="35" class="flow-phase"></rect>
+                    <text x="500" y="752" text-anchor="middle" class="flow-phase-text">Phase 4: Workflow Automation</text>
+                    
+                    <!-- Three workflow actions -->
+                    <rect x="100" y="790" width="200" height="60" rx="5" class="flow-box"></rect>
+                    <text x="200" y="815" text-anchor="middle" class="flow-text">Auto-Initiate</text>
+                    <text x="200" y="835" text-anchor="middle" class="flow-text-small">Start screening process</text>
+                    
+                    <rect x="400" y="790" width="200" height="60" rx="5" class="flow-box"></rect>
+                    <text x="500" y="815" text-anchor="middle" class="flow-text">Send Follow-up</text>
+                    <text x="500" y="835" text-anchor="middle" class="flow-text-small">SMS &amp; email sequences</text>
+                    
+                    <rect x="700" y="790" width="200" height="60" rx="5" class="flow-box"></rect>
+                    <text x="800" y="815" text-anchor="middle" class="flow-text">Route Qualified</text>
+                    <text x="800" y="835" text-anchor="middle" class="flow-text-small">To recruitment team</text>
+                    
+                    <path d="M 500 765 L 200 790" class="flow-arrow"></path>
+                    <path d="M 500 765 L 500 790" class="flow-arrow"></path>
+                    <path d="M 500 765 L 800 790" class="flow-arrow"></path>
+                    
+                    <!-- Converge -->
+                    <path d="M 200 850 L 200 880 L 500 880" class="flow-arrow"></path>
+                    <path d="M 500 850 L 500 880" class="flow-arrow"></path>
+                    <path d="M 800 850 L 800 880 L 500 880" class="flow-arrow"></path>
+                    
+                    <!-- Phase 5 Header -->
+                    <rect x="50" y="880" width="900" height="35" class="flow-phase"></rect>
+                    <text x="500" y="902" text-anchor="middle" class="flow-phase-text">Phase 5: Reporting &amp; Notifications</text>
+                    
+                    <!-- Three outputs -->
+                    <rect x="100" y="940" width="200" height="60" rx="5" class="flow-box"></rect>
+                    <text x="200" y="965" text-anchor="middle" class="flow-text">Categorized Data</text>
+                    <text x="200" y="985" text-anchor="middle" class="flow-text-small">CRM status updates</text>
+                    
+                    <rect x="400" y="940" width="200" height="60" rx="5" class="flow-box"></rect>
+                    <text x="500" y="965" text-anchor="middle" class="flow-text">Team Notifications</text>
+                    <text x="500" y="985" text-anchor="middle" class="flow-text-small">Real-time alerts</text>
+                    
+                    <rect x="700" y="940" width="200" height="60" rx="5" class="flow-box"></rect>
+                    <text x="800" y="965" text-anchor="middle" class="flow-text">Conversation Logs</text>
+                    <text x="800" y="985" text-anchor="middle" class="flow-text-small">Complete audit trail</text>
+                    
+                    <path d="M 500 915 L 200 940" class="flow-arrow"></path>
+                    <path d="M 500 915 L 500 940" class="flow-arrow"></path>
+                    <path d="M 500 915 L 800 940" class="flow-arrow"></path>
+                    
+                    <!-- Converge -->
+                    <path d="M 200 1000 L 200 1030 L 500 1030" class="flow-arrow"></path>
+                    <path d="M 500 1000 L 500 1030" class="flow-arrow"></path>
+                    <path d="M 800 1000 L 800 1030 L 500 1030" class="flow-arrow"></path>
+                    
+                    <!-- Phase 6 Header -->
+                    <rect x="50" y="1030" width="900" height="35" class="flow-phase"></rect>
+                    <text x="500" y="1052" text-anchor="middle" class="flow-phase-text">Phase 6: Testing &amp; Optimization</text>
+                    
+                    <!-- Testing -->
+                    <rect x="400" y="1090" width="200" height="60" rx="5" class="flow-box"></rect>
+                    <text x="500" y="1115" text-anchor="middle" class="flow-text">Testing</text>
+                    <text x="500" y="1135" text-anchor="middle" class="flow-text-small">Quality assurance</text>
+                    
+                    <path d="M 500 1065 L 500 1090" class="flow-arrow"></path>
+                    <path d="M 500 1150 L 500 1180" class="flow-arrow"></path>
+                    
+                    <!-- Optimization -->
+                    <rect x="400" y="1180" width="200" height="60" rx="5" class="flow-box"></rect>
+                    <text x="500" y="1205" text-anchor="middle" class="flow-text">Optimization</text>
+                    <text x="500" y="1225" text-anchor="middle" class="flow-text-small">Continuous improvement</text>
+                    
+                    <path d="M 500 1240 L 500 1270" class="flow-arrow"></path>
+                    
+                    <!-- Solution -->
+                    <ellipse cx="500" cy="1300" rx="80" ry="30" style="fill: #40916C; stroke: #0A0A0A; stroke-width: 2;"></ellipse>
+                    <text x="500" y="1308" text-anchor="middle" style="fill: #FAFAF8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Arial', sans-serif; font-size: 13px; font-weight: 700;">SOLUTION</text>
+                </svg>
+            </div>
+            
+            <!-- Detailed Process Breakdown -->
+            <div class="process-details">
+                <div class="section-label">Phase-by-Phase Breakdown</div>
+                <div class="process-grid">
+                    <div class="process-card">
+                        <div class="process-header">
+                            <div class="process-number">1</div>
+                            <div class="process-title">AI Agent Setup</div>
+                        </div>
+                        <ul class="process-steps">
+                            <li>Configure Retell AI voice agent with custom prompts</li>
+                            <li>Design conversational flows for screening questions</li>
+                            <li>Set up chatbot for text-based interactions</li>
+                            <li>Train AI on job requirements and company culture</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="process-card">
+                        <div class="process-header">
+                            <div class="process-number">2</div>
+                            <div class="process-title">CRM Integration</div>
+                        </div>
+                        <ul class="process-steps">
+                            <li>Establish bi-directional sync with Bullhorn</li>
+                            <li>Map candidate data fields for automation</li>
+                            <li>Configure real-time status updates</li>
+                            <li>Set up webhook triggers for new applications</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="process-card">
+                        <div class="process-header">
+                            <div class="process-number">3</div>
+                            <div class="process-title">Conversation Design</div>
+                        </div>
+                        <ul class="process-steps">
+                            <li>Develop screening question library</li>
+                            <li>Create qualification criteria logic</li>
+                            <li>Design engagement scripts for voice and text</li>
+                            <li>Build dynamic response templates</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="process-card">
+                        <div class="process-header">
+                            <div class="process-number">4</div>
+                            <div class="process-title">Workflow Automation</div>
+                        </div>
+                        <ul class="process-steps">
+                            <li>Build n8n workflows for auto-initiation</li>
+                            <li>Configure follow-up sequences (SMS/email)</li>
+                            <li>Set up intelligent routing to recruiters</li>
+                            <li>Create exception handling for edge cases</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="process-card">
+                        <div class="process-header">
+                            <div class="process-number">5</div>
+                            <div class="process-title">Reporting System</div>
+                        </div>
+                        <ul class="process-steps">
+                            <li>Configure Slack/Teams notifications</li>
+                            <li>Build real-time dashboard for team visibility</li>
+                            <li>Set up automated consultant reports</li>
+                            <li>Create candidate journey tracking</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="process-card">
+                        <div class="process-header">
+                            <div class="process-number">6</div>
+                            <div class="process-title">Testing &amp; Launch</div>
+                        </div>
+                        <ul class="process-steps">
+                            <li>Conduct pilot with 5 job postings</li>
+                            <li>Gather feedback from recruitment team</li>
+                            <li>Optimize conversation flows and triggers</li>
+                            <li>Full rollout across all active positions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Key Features -->
+            <div class="timeline-section">
+                <div class="section-label">Key Automation Features</div>
+                <div class="timeline-container">
+                    <div class="timeline-grid">
+                        <div class="timeline-phase">
+                            <div class="timeline-week">Multi-Channel</div>
+                            <div class="timeline-task">Voice calls, SMS, chat—all automated with consistent messaging</div>
+                        </div>
+                        <div class="timeline-phase">
+                            <div class="timeline-week">Smart Recovery</div>
+                            <div class="timeline-task">Automatic retry logic for missed calls with SMS fallback</div>
+                        </div>
+                        <div class="timeline-phase">
+                            <div class="timeline-week">Real-Time Sync</div>
+                            <div class="timeline-task">Instant updates to Bullhorn with zero manual data entry</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 2 Footer -->
+        <div class="footer">
+            <div class="footer-left">Ready to 10× your recruitment capacity? Let's discuss your specific workflow.</div>
+            <div class="footer-right">Page 2 of 2 | Technical Documentation</div>
+        </div>
+    </div>
+
+
+</body></html>
